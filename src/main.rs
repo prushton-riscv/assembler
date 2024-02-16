@@ -7,7 +7,7 @@ mod tokenizer;
 mod parser;
 
 use crate::parser::{Parsed};
-use crate::tokenizer::{Token, TokenType};
+use crate::tokenizer::{Token};
 
 
 fn main() {
@@ -42,26 +42,33 @@ fn main() {
     }
  
     
-
+    let mut machine_code: String = String::from("");
 
     for line in file_lines {
-        println!("Line: {}\n    Tokens:", &line);
+        //println!("Line: {}\n    Tokens:", &line);
         let tokens = Token::tokenize(line);
-        for token in &tokens {
+        /*for token in &tokens {
             println!("      {:?}: {:?}; ", token.token_type, token.lexeme);
-        }
-        println!("  Parsed Tokens:");
+        }*/
+        //println!("  Parsed Tokens:");
         let parsed_tokens = Parsed::parse_tokens(&tokens, &labels);
-        for token in &parsed_tokens {
+        /*for token in &parsed_tokens {
             println!("      {:?}: {:?}; ", token.token_type, token.lexeme);
-        }
-        println!("  Binary");
+        }*/
+        //println!("  Binary");
         let binary = Parsed::from_parsed_tokens(&parsed_tokens);
-        println!("      {}", binary.binary);
+        //println!("      {}", binary.binary);
+        
+        machine_code.push_str(binary.binary.as_str());
+        machine_code.push_str("\n");
     }
 
-    println!("Label Addresses");
+    /*println!("Label Addresses");
     for line in labels {
         println!("  {:?}", line);
-    }
+    }*/
+
+    let _ = fs::write("a.out", machine_code);
+
+    println!("Assemble Successful");
 }

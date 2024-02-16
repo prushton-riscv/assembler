@@ -122,7 +122,7 @@ impl Parsed {
             },
             "0010" => {
                 full_binary.insert_str(0, "0000000000");
-                let offset = format!("{:020b}", parsed_tokens[3].lexeme.parse::<i64>().unwrap());
+                let offset = format!("{:022b}", parsed_tokens[3].lexeme.parse::<i64>().unwrap());
                 let ma = format!("{:010b}", parsed_tokens[1].lexeme.parse::<i64>().unwrap());
                 let rs = format!("{:010b}", parsed_tokens[5].lexeme.parse::<i64>().unwrap());
                 
@@ -131,7 +131,7 @@ impl Parsed {
                 full_binary.insert_str(0, offset.as_str());
             },
             "0011" => {
-                let offset = format!("{:020b}", parsed_tokens[4].lexeme.parse::<i64>().unwrap());
+                let offset = format!("{:022b}", parsed_tokens[4].lexeme.parse::<i64>().unwrap());
                 let ma = format!("{:010b}", parsed_tokens[2].lexeme.parse::<i64>().unwrap());
                 let rd = format!("{:010b}", parsed_tokens[1].lexeme.parse::<i64>().unwrap());
                 
