@@ -1,5 +1,7 @@
 use std::env::args;
 use std::fs;
+use std::collections::LinkedList;
+use std::collections::HashMap;
 
 
 fn main() {
@@ -14,9 +16,39 @@ fn main() {
         false => {println!("Invalid File"); return;}
     };
 
+    let file_iter = file.split("\n");
+    let mut file_lines = LinkedList::new();
+    let mut labels: HashMap<&str, u32> = HashMap::new();
+
+    let mut i: u32 = 0;
+    for line in file_iter { //parse out the labels, blank lines, and comment lines
+        if line == "" || line.starts_with(";"){
+            continue;
+        }
+        if line.ends_with(":") {
+            labels.insert(line, i);
+            continue;
+        }   
+        file_lines.push_back(&line[1..]);
+        i += 1;
+    }
+ 
+    replace_jump_labels(&mut file_lines, &labels);
+
+    for line in file_lines {
+        println!("{}", line);
+    }
+
+    for line in labels {
+        println!("{:?}", line);
+    }
+}
 
 
 
-    println!("---{}---", &input);
-    println!("{}", &file);
+fn replace_jump_labels<'a>(file_lines: &mut LinkedList<&str>, labels: &HashMap<&'a str, u32>) {
+
+    for line in file_lines {
+        
+    }
 }
