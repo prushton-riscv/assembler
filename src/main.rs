@@ -3,6 +3,10 @@ use std::fs;
 use std::collections::LinkedList;
 use std::collections::HashMap;
 
+mod tokenizer;
+
+use crate::tokenizer::{Token, TokenType};
+
 
 fn main() {
     let input: String = match args().nth(1).is_none()  {
@@ -33,7 +37,8 @@ fn main() {
         i += 1;
     }
  
-    replace_jump_labels(&mut file_lines, &labels);
+    
+
 
     for line in file_lines {
         println!("{}", line);
@@ -41,14 +46,5 @@ fn main() {
 
     for line in labels {
         println!("{:?}", line);
-    }
-}
-
-
-
-fn replace_jump_labels<'a>(file_lines: &mut LinkedList<&str>, labels: &HashMap<&'a str, u32>) {
-
-    for line in file_lines {
-        
     }
 }
