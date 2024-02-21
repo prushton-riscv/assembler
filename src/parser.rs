@@ -32,15 +32,15 @@ static OPCODES: phf::Map<&'static str, &'static str> = phf_map!{
     "lshifti" => "0001_0000_1011",
     "rshifti" => "0001_0000_1100",
 
-    "jtl" => "0001_0010_0000",
-    "beq" => "0001_0010_0001",
-    "blt" => "0001_0010_0010",
-    "bgt" => "0001_0010_0011",
-
     "sw" => "0010_0000_0000",
     "simem" => "0010_0000_0001",
 
     "lw" => "0011_0000_0000",
+    
+    "jtl" => "0100_0010_0000",
+    "beq" => "0100_0010_0001",
+    "blt" => "0100_0010_0010",
+    "bgt" => "0100_0010_0011",
 };
 
 pub struct Parsed {
@@ -139,6 +139,15 @@ impl Parsed {
                 full_binary.insert_str(0, ma.as_str());
                 full_binary.insert_str(0, "0000000000");
                 full_binary.insert_str(0, offset.as_str());
+            },
+            "0100" => {
+                let label = format!("{:022b}", parsed_tokens[3].lexeme.parse::<i64>().unwrap());
+                let rs1 = format!("{:010b}", parsed_tokens[2].lexeme.parse::<i64>().unwrap());
+                let rs2 = format!("{:010b}", parsed_tokens[1].lexeme.parse::<i64>().unwrap());
+                full_binary.insert_str(0, "0000000000");
+                full_binary.insert_str(0, rs1.as_str());
+                full_binary.insert_str(0, rs2.as_str());
+                full_binary.insert_str(0, label.as_str());
             },
             _ => {println!("Unrecognized opcode {}", opcode); std::process::exit(1)}
         }
